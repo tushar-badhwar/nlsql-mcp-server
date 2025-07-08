@@ -6,8 +6,7 @@ This module defines all the MCP tools that expose nlsql functionality.
 
 import logging
 from typing import Any, Dict, List, Optional, Union
-from mcp.server.models import Tool
-from mcp.types import TextContent, ImageContent, EmbeddedResource
+from mcp.types import Tool, TextContent, ImageContent, EmbeddedResource
 import json
 
 from nlsql_mcp_server.nlsql_client import NLSQLClient

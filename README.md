@@ -261,6 +261,23 @@ asyncio.run(main())
 "
 ```
 
+## Testing
+
+The repository includes comprehensive tests to verify your setup:
+
+```bash
+# Basic functionality test (no API key required)
+python3 tests/test_basic.py
+
+# Full setup validation
+python3 tests/test_setup.py
+
+# AI functionality test (requires OpenAI API key)
+python3 tests/test_with_api.py
+```
+
+See [tests/README.md](tests/README.md) for detailed testing documentation.
+
 ## Development
 
 ### Project Structure

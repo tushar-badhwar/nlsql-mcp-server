@@ -8,6 +8,18 @@ import asyncio
 import logging
 import os
 from typing import Any, Sequence
+from pathlib import Path
+
+# Load environment variables from .env file if it exists
+try:
+    from dotenv import load_dotenv
+    # Look for .env file in the MCP server directory
+    env_file = Path(__file__).parent.parent.parent / ".env"
+    if env_file.exists():
+        load_dotenv(env_file)
+        logger.info(f"Loaded environment variables from {env_file}")
+except ImportError:
+    logger.warning("python-dotenv not available, skipping .env file loading")
 
 from mcp.server import NotificationOptions, Server
 from mcp.server.models import InitializationOptions

@@ -14,9 +14,15 @@ import tempfile
 import json
 
 # Add the nlsql directory to the Python path
-NLSQL_DIR = Path(__file__).parent.parent.parent / "nlsql"
+# Go up from src/nlsql_mcp_server/nlsql_client.py to parent directory, then to nlsql
+NLSQL_DIR = Path(__file__).parent.parent.parent.parent / "nlsql"
 if NLSQL_DIR.exists():
     sys.path.insert(0, str(NLSQL_DIR))
+else:
+    # Try alternative path
+    NLSQL_DIR = Path("/home/tbadhwar/nlsql")
+    if NLSQL_DIR.exists():
+        sys.path.insert(0, str(NLSQL_DIR))
 
 try:
     from database_manager import DatabaseManager

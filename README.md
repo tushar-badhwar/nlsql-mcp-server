@@ -1,6 +1,6 @@
 # NLSQL MCP Server
 
-An MCP (Model Context Protocol) server that exposes the functionality of the [nlsql](../nlsql) Natural Language to SQL application as MCP tools. This allows any MCP-compatible client to convert natural language questions into SQL queries using AI.
+An MCP (Model Context Protocol) server that exposes the functionality of the [nl2sql](https://github.com/tushar-badhwar/nl2sql) Natural Language to SQL application as MCP tools. This allows any MCP-compatible client to convert natural language questions into SQL queries using AI.
 
 ## Features
 

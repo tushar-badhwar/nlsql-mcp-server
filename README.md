@@ -14,30 +14,46 @@ An MCP (Model Context Protocol) server that exposes the functionality of the [nl
 
 ## Prerequisites
 
-1. **NLSQL Application**: This MCP server requires the nlsql application to be installed in the parent directory
+1. **NLSQL Application**: This MCP server is a wrapper around the [nl2sql application](https://github.com/tushar-badhwar/nl2sql). You **must install nl2sql first**.
 2. **OpenAI API Key**: Required for natural language to SQL conversion
 3. **Python 3.8+**: Compatible with Python 3.8 and above
 
 ## Installation
 
-### 1. Clone and Setup
+### Step 1: Install the NLSQL Application (Required)
+
+**This MCP server requires the original nl2sql application to be installed first.**
 
 ```bash
-# Navigate to your project directory (where nlsql is located)
-cd /path/to/your/projects
-
-# Clone this MCP server (if not already done)
-git clone <repository-url> nlsql-mcp-server
-cd nlsql-mcp-server
+# Clone the original nl2sql application
+git clone https://github.com/tushar-badhwar/nl2sql.git
+cd nl2sql
 
 # Install dependencies
+pip install -r requirements.txt
+
+# Test the installation
+streamlit run main.py
+```
+
+### Step 2: Install the MCP Server
+
+```bash
+# Navigate to the same parent directory where nl2sql is located
+cd ..  # Now you should be in the directory containing nl2sql/
+
+# Clone this MCP server
+git clone https://github.com/tushar-badhwar/nlsql-mcp-server.git
+cd nlsql-mcp-server
+
+# Install MCP server dependencies
 pip install -r requirements.txt
 
 # Or install in development mode
 pip install -e .
 ```
 
-### 2. Environment Setup
+### Step 3: Environment Setup
 
 ```bash
 # Set your OpenAI API key
@@ -47,13 +63,13 @@ export OPENAI_API_KEY="your_api_key_here"
 echo "OPENAI_API_KEY=your_api_key_here" > .env
 ```
 
-### 3. Verify Directory Structure
+### Step 4: Verify Directory Structure
 
 Ensure your directory structure looks like this:
 
 ```
 parent_directory/
-├── nlsql/                 # Original nlsql application
+├── nl2sql/                # Original nl2sql application (required dependency)
 │   ├── main.py
 │   ├── database_manager.py
 │   ├── crew_setup.py
@@ -62,9 +78,12 @@ parent_directory/
 │   └── nba.sqlite
 └── nlsql-mcp-server/      # This MCP server
     ├── src/
+    ├── tests/
     ├── README.md
     └── requirements.txt
 ```
+
+**Important**: The MCP server automatically looks for the nl2sql directory in the parent directory. If you have a different setup, you may need to adjust the path in `src/nlsql_mcp_server/nlsql_client.py`.
 
 ## Running the Server
 
@@ -229,9 +248,11 @@ SQL query troubleshooting workflow.
 
 ### Common Issues
 
-1. **"nlsql modules not found"**
-   - Ensure the nlsql directory exists in the parent directory
-   - Check that all required nlsql files are present
+1. **"Could not find the nl2sql application" or "nlsql modules not found"**
+   - **Solution**: Install the original nl2sql application first
+   - **Command**: `git clone https://github.com/tushar-badhwar/nl2sql.git`
+   - **Verify**: Check that `nl2sql/database_manager.py` exists
+   - **Structure**: Ensure both `nl2sql/` and `nlsql-mcp-server/` are in the same parent directory
 
 2. **"OpenAI API key not found"**
    - Set the OPENAI_API_KEY environment variable

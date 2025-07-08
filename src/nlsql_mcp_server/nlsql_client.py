@@ -13,16 +13,34 @@ from pathlib import Path
 import tempfile
 import json
 
-# Add the nlsql directory to the Python path
-# Go up from src/nlsql_mcp_server/nlsql_client.py to parent directory, then to nlsql
-NLSQL_DIR = Path(__file__).parent.parent.parent.parent / "nlsql"
-if NLSQL_DIR.exists():
-    sys.path.insert(0, str(NLSQL_DIR))
-else:
-    # Try alternative path
-    NLSQL_DIR = Path("/home/tbadhwar/nlsql")
-    if NLSQL_DIR.exists():
+# Add the nl2sql/nlsql directory to the Python path
+# This MCP server requires the original nl2sql application to be installed
+# Go up from src/nlsql_mcp_server/nlsql_client.py to parent directory, then look for nl2sql or nlsql
+
+# Try different possible directory names and locations
+possible_dirs = [
+    Path(__file__).parent.parent.parent.parent / "nl2sql",  # Standard GitHub repo name
+    Path(__file__).parent.parent.parent.parent / "nlsql",   # Alternative name
+    Path("/home/tbadhwar/nlsql"),                           # Absolute path fallback
+    Path("/home/tbadhwar/nl2sql")                           # Absolute path fallback
+]
+
+NLSQL_DIR = None
+for dir_path in possible_dirs:
+    if dir_path.exists() and (dir_path / "database_manager.py").exists():
+        NLSQL_DIR = dir_path
         sys.path.insert(0, str(NLSQL_DIR))
+        break
+
+if not NLSQL_DIR:
+    raise ImportError(
+        "Could not find the nl2sql application. Please ensure it's installed in the parent directory.\n"
+        "Install from: https://github.com/tushar-badhwar/nl2sql\n"
+        "Expected structure:\n"
+        "  parent_directory/\n"
+        "  ├── nl2sql/          # Original application\n"
+        "  └── nlsql-mcp-server/ # This MCP server"
+    )
 
 try:
     from database_manager import DatabaseManager

@@ -32,11 +32,14 @@ def test_imports():
         print(f"   ❌ MCP import error: {e}")
         return False
     
-    # Test 3: Check nlsql directory exists
-    print("3. Checking nlsql directory...")
+    # Test 3: Check nl2sql/nlsql directory exists
+    print("3. Checking nl2sql application directory...")
     nlsql_dir = Path(__file__).parent.parent / "nlsql"
+    if not nlsql_dir.exists():
+        nlsql_dir = Path(__file__).parent.parent / "nl2sql"
+    
     if nlsql_dir.exists():
-        print(f"   ✅ Found nlsql directory at: {nlsql_dir}")
+        print(f"   ✅ Found nl2sql application at: {nlsql_dir}")
         
         # Check key files
         key_files = ["database_manager.py", "crew_setup.py", "agents.py", "tasks.py"]
@@ -47,7 +50,8 @@ def test_imports():
                 print(f"      ❌ Missing {file}")
                 return False
     else:
-        print(f"   ❌ nlsql directory not found at: {nlsql_dir}")
+        print(f"   ❌ nl2sql application not found. Please install from:")
+        print(f"      https://github.com/tushar-badhwar/nl2sql")
         return False
     
     # Test 4: NLSQL modules import
